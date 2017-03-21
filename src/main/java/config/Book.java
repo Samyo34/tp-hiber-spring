@@ -11,8 +11,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Entity
 @Table(name="book")
+@Transactional
 public class Book {
 	
 	@Id	@GeneratedValue(strategy=GenerationType.IDENTITY) private Integer id;

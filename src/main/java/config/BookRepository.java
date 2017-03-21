@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
@@ -16,16 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class BookRepository {
 	
-	@PersistenceContext
+	@PersistenceContext(type=PersistenceContextType.EXTENDED)
 	EntityManager em;
 
 	protected Session getSession() {
 		return em.unwrap(Session.class);
 	}
-//
-//	public void persist(Object entity) {
-//		em.persist(entity);
-//	}
+
+	public void persist(Object entity) {
+		em.persist(em.merge(entity));
+	}
 	
 	public List<Book> getAll(){
 		TypedQuery<Book> query = em.createQuery("select b "+
@@ -39,11 +40,11 @@ public class BookRepository {
 	}
 	
 	public void deleteBook(Book b){
-		em.remove(b);
+		em.remove(em.contains(b) ? b : em.merge(b));
 	}
 	
 	public void addBook(Book b){
-		em.persist(b);
+		em.persist(em.contains(b) ? b : em.merge(b));
 	}
 	
 	public void updateBook(Book b){

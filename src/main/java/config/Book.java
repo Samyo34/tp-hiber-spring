@@ -11,12 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.transaction.annotation.Transactional;
-
 @Entity
 @Table(name="book")
-@Transactional
-public class Book {
+public class Book extends AbstractEntity{
 	
 	@Id	@GeneratedValue(strategy=GenerationType.IDENTITY) private Integer id;
 	@Column	private String title;
@@ -24,6 +21,7 @@ public class Book {
 	@Column(name="nb_pages") private Long nbPages;
 	@Column(name="publication_date") @Temporal(TemporalType.DATE)private Date datePubli;
 	
+	@Override
 	public Integer getId() {
 		return id;
 	}

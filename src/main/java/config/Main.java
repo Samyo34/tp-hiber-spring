@@ -9,7 +9,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		AbstractApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-		BookRepository repo = context.getBean(BookRepository.class);
+		AbstractRepository<Book> repo = context.getBean(BookRepository.class);
 		
 		/* *** afficher tout les livre de la table *** */
 		System.out.println(repo.getAll());
@@ -21,22 +21,22 @@ public class Main {
 		b.setAuthor("Un autheur méconnu");
 		b.setNbPages(254L);
 		b.setDatePubli(new Date());
-		b = repo.addBook(b);
+		b = repo.add(b);
 		System.out.println("Livre ajouté : "+b);
 		/* ************************** */
 		
 		/* *** Mettre à jour un livre *** */
 		b.setTitle("Nouveau titre");
-		b = repo.updateBook(b);
+		b = repo.update(b);
 		System.out.println("Livre mis à jour : "+b);
 		/* ****************************** */
 		
 		/* *** Supprimer un livre *** */
-		repo.deleteBook(b);
+		repo.delete(b);
 		/* ********************* */
 		
 		/* *** afficher le livre ayant un certain id *** */
-		System.out.println(repo.getBookById(21));
+		System.out.println(repo.getById(21));
 		/* ********************************************* */
 		
 	}

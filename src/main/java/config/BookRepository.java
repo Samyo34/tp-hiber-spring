@@ -1,56 +1,48 @@
 package config;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-import javax.persistence.TypedQuery;
-
-import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-
 
 @Repository
-@Transactional
-public class BookRepository {
+public class BookRepository extends AbstractRepository<Book>{
 	
-	@PersistenceContext(type=PersistenceContextType.EXTENDED)
-	EntityManager em;
-
-	protected Session getSession() {
-		return em.unwrap(Session.class);
-	}
-
-	public void persist(Object entity) {
-		em.persist(em.merge(entity));
+	public BookRepository(){
+		super(Book.class);
 	}
 	
-	public List<Book> getAll(){
-		TypedQuery<Book> query = em.createQuery("select b "+
-				"from Book b ",Book.class);
-		List<Book> books = query.getResultList();
-		return books;
-	}
+//	@PersistenceContext(type=PersistenceContextType.EXTENDED)
+//	EntityManager em;
+//
+//	protected Session getSession() {
+//		return em.unwrap(Session.class);
+//	}
+//
+//	public void persist(Object entity) {
+//		em.persist(em.merge(entity));
+//	}
 	
-	public Book getBookById(Integer idBook){
-		return em.find(Book.class,idBook);
-	}
+//	public List<Book> getAll(){
+//		TypedQuery<Book> query = em.createQuery("select b "+
+//				"from Book b ",Book.class);
+//		List<Book> books = query.getResultList();
+//		return books;
+//	}
 	
-	public void deleteBook(Book b){
-		em.remove(em.contains(b) ? b : em.merge(b));
-	}
-	
-	public Book addBook(Book b){
-		em.persist(b);
-		return b;
-	}
-	
-	public Book updateBook(Book b){
-		em.merge(b);
-		return b;
-	}
+//	public Book getBookById(Integer idBook){
+//		return em.find(Book.class,idBook);
+//	}
+//	
+//	public void deleteBook(Book b){
+//		em.remove(em.contains(b) ? b : em.merge(b));
+//	}
+//	
+//	public Book addBook(Book b){
+//		em.persist(b);
+//		return b;
+//	}
+//	
+//	public Book updateBook(Book b){
+//		em.merge(b);
+//		return b;
+//	}
 
 }

@@ -43,12 +43,14 @@ public class BookRepository {
 		em.remove(em.contains(b) ? b : em.merge(b));
 	}
 	
-	public void addBook(Book b){
-		em.persist(em.contains(b) ? b : em.merge(b));
+	public Book addBook(Book b){
+		em.persist(b);
+		return b;
 	}
 	
-	public void updateBook(Book b){
+	public Book updateBook(Book b){
 		em.merge(b);
+		return b;
 	}
 
 }
